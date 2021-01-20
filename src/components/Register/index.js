@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 const Register = () => {
@@ -16,9 +17,7 @@ const Register = () => {
   const handleSubmit = () => {
     console.log('user', user);
     // send axios rqst to register user
-    axios.post('localhost:5000/user/register', user, {
-      headers: { "Access-Control-Allow-Origin": "http://localhost:3000", 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS', 'Content-Type': 'application/json' }
-    })
+    axios.post('http://localhost:5000/user/register', user)
       .then((res) => {
         console.log('registered user', res);
       })
@@ -57,8 +56,14 @@ const Register = () => {
             <Form.Control type="password" placeholder="Enter your Password" required name="password" value={user.password} onChange={handleOnChange} />
           </Form.Group>
 
-          <Button variant="primary" type="button" onClick={handleSubmit}>Submit</Button>
+          <div className="d-flex justify-content-center mt-4">
+            <Button type="button" className="btn btn-dark btn-sm btn-block" onClick={handleSubmit}>Submit</Button>
+          </div>
         </Form>
+      </Row>
+      <Row className="d-flex justify-content-center mt-4">
+        <Link to="/login" style={{marginRight: 12}}>Login User</Link>
+        <Link to="/" style={{marginLeft: 12}}>Go to Home</Link>
       </Row>
     </Container>
   )

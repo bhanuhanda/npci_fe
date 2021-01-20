@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -6,8 +6,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import axios from 'axios';
+import UserContext from '../../Contexts/UserContext';
+import { Link } from "react-router-dom";
 
 const MainPage = () => {
+  const {contextUserData} = useContext(UserContext);
+
   const recentPeople = [{ name: 'User 1' }, { name: 'User 2' }];
   const [users, setUsers] = useState([]);
 
@@ -19,6 +23,10 @@ const MainPage = () => {
       })
   }, [])
 
+  useEffect(()=>{
+    console.log('user data in main page', contextUserData);
+  },[contextUserData])
+
   return (
     <>
       <Container>
@@ -26,6 +34,10 @@ const MainPage = () => {
           <Col xs={12}>
             <Jumbotron>
               Profile Section
+              <div className="float-right">
+                <Link to="/login">Login</Link>
+                <Link to="/register" style={{margin: 24}}>Register</Link>
+              </div>
             </Jumbotron>
           </Col>
         </Row>
@@ -33,6 +45,8 @@ const MainPage = () => {
           <Col xs={12} className="text-center">
             <Jumbotron>
               Balance : Rs. 10000
+              <hr />
+              <Link to="/transaction">Transactions</Link>
           </Jumbotron>
           </Col>
         </Row>
